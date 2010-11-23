@@ -1,0 +1,6 @@
+g++ -g -c fractalsurf.cpp
+g++ -o fractalsurf fractalsurf.o `sdl-config --libs`  $HOME/libs/ranlib.a -lm
+
+
+g++ -g -c fractalvol.cpp
+g++ -o fractalvol fractalvol.o `sdl-config --libs`  $HOME/libs/ranlib.a -lm
