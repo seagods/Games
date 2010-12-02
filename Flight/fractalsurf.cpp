@@ -16,8 +16,8 @@ int main(){
 	//
 	int iseg=(int)pow(2,N);   //Number of segments is 2**N
         int iseg2=iseg/2;
-        int Num=iseg+1;   //number of nodes is number of segments
-	int Num2=iseg;  //iseg shall be successively halved
+        int Num=iseg+1;   //number of nodes on baseline is number of segments+1
+	int Num2=iseg;  //iseg shall be successively halved, keep copy
 
 	double Array[Num][Num];
 	int isquare[4];
@@ -51,11 +51,8 @@ int main(){
 	
 	setall(iseed1, iseed2);
 
-
-
 	long iran;
 	float fran;
-
 
 	for(int i=0; i<Num;i++)
 		for(int j=0; j<Num; j++)

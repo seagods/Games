@@ -2,7 +2,7 @@ TARGET		=Flight
 
 $(TARGET):	Flight.o   gl2ps.o  
 	g++ -g -o $(TARGET) Flight.o  gl2ps.o  \
-	 `sdl-config --libs` -lGL -lGLU -lgltt -lttf  -lm
+	 `sdl-config --libs` -lGL -lGLU -lOGLFT -lm
 
 Flight.o:   
 	g++ -g  -c Flight.cpp `sdl-config --cflags`

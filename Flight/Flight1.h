@@ -35,15 +35,13 @@ bool startoffx=true;
 bool startoffy=true;
 bool launch=true;
 /*************************************************************/
-bool periodic_xz=false;
+bool periodic_xz=true;
 bool collisiontest=true;
-bool foggy=false;
+bool foggy=true;
 bool Gouraud=true;
-bool drawlines=true;
-bool picking=true;  //enable us to pick things in the scene
-bool PickTri=true;  //if false, we pick nodes and not triangles
-int ipicked;
-int hits;           //number of hits if picking
+bool drawlines=false;
+bool picking=false;  //enable us to pick things in the scene
+bool PickTri=false;  //if false, we pick nodes and not triangles
 /********************MODES***********************************/
 bool twodee=false;  // camera moves in xz only
 
@@ -53,15 +51,15 @@ bool freedom=true;      // if true viewer is free to move anywhere
 bool tethered=false;   //  if true viewer is attached to fixed point by a boom
 bool staked=false;    //   if true viewer is not free to move, but can look about
 
-bool wander=true;    //one of these must be set true if free is true
-bool flight=false;
+bool wander=false;    //one of these must be set true if free is true
+bool flight=true;
 
-bool aeroplane=false;   // if true we have aeroplane roll - pitch control
+bool aeroplane=true;   // if true we have aeroplane roll - pitch control
 
                         
 bool boom=false;      //  needed for tethered only 
                       //  if boom true  make exwhyzed false
-bool exwhyzed=true;   //  if tethered make boom false if exwhyzed is true
+bool exwhyzed=false;   //  if tethered make boom false if exwhyzed is true
                       //  if wander must always be true
 		      //  if flight can be true or false
 		      //  make false if aeroplane true
@@ -92,13 +90,11 @@ D3Dvec* Normals;
 D3Dvec* NodeNormals;
 #include "../../XFiles/List.h"
 #include "../../XFiles/Node1.h"
-typedef CMyNode1 <int>  ListNode;
+typedef CMyNode1<int>  ListNode;
 typedef CMyLinkedList<ListNode> intList;
 int const MD=4;  //MAXIMUM DEPTH OF TREE (depth ranges from 0 to MD
     intList** CollideTri; 
     int nlists;
-    intList**  NodeTris;
-
 #include "../../XFiles/TriOctNode.h"
 #include "../../XFiles/TriOctTree.h"
 typedef CMyOctNode <D3Dvec> ONode; //An ONode shall hold a vector
@@ -130,7 +126,7 @@ extern const double convert;
 int arg_count;
 char **arg_list;
 const int nplotsmax=1;
-int ntri, istart, n_nodes, istop, ishow;
+int ntri, istart, n_nodes, istop;
 
 double speed=50.0, angspeed=0.05, speed_diff=.5;
 
@@ -140,14 +136,10 @@ double speed=50.0, angspeed=0.05, speed_diff=.5;
 void EventLoop();
 void RenderScene(CCam  & Camera1);
 void PickObjects();
-UINT* TriBuffer;
 void ProcessHitsLP(int, UINT *);
 void ProcessHitsLC(int, UINT *);
 void ProcessHitsMC(int, UINT *);
-int  ProcessTriangleHits(int, UINT *); //processing in Flight.cpp
-int  ProcessNodeHits(int, UINT *);
-void ProcessTBoxHits(int, UINT *); //processing in DrawXBox
-void ProcessNBoxHits(int, UINT *);
+void ProcessTriangleHits(int, UINT *);
 void SetUp();
 void ToggleWindow(void);
 void MakeWindow(const char *Name, 
@@ -169,8 +161,6 @@ void PerspectiveMode();
 void DrawLightPos(bool);
 void DrawLightCol(bool);
 void DrawMatCol(bool);
-void DrawTriHits(bool);
-void DrawNodeHits(bool);
 
 extern UINT base; //bitmap font functions
 void buildFont(void); 
