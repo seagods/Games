@@ -153,10 +153,6 @@ void EventLoop()
     ihalfside=iside/2;
     cout <<  n_nodes << "  number of nodes" << endl;
     cout <<  ntri<< "  number of triangles" << endl;
-    cout << "read next line\n";
-
-
-    cout << "start read loop\n";
 
     int namedepth;
     glGetIntegerv(GL_MAX_NAME_STACK_DEPTH,&namedepth);
@@ -294,8 +290,6 @@ void EventLoop()
       if(it==0)l=Triangles[i].Get1();
       if(it==1)l=Triangles[i].Get2();
       if(it==2)l=Triangles[i].Get3();
-      if(l==iside){
-           cout << "here " << endl;}
       ListNode* Node1=new ListNode;
       Node1->SetNode(i);
       NodeTris[l]->AddToTop(Node1);
@@ -379,23 +373,6 @@ void EventLoop()
       } //end it loop
 
     }
-/*  Used for testing periodic bcs
-    ListNode* Head;
-    ListNode* Tail;
-    int listlength;
-    int itest=129;
-
-    Head=NodeTris[itest]->GetHead();
-    Tail=NodeTris[itest]->GetTail();
-    listlength=NodeTris[itest]->GetLength();
-    cout << " length of list= " << listlength << endl;
-
-    while(Head->GetNextPtr() != Tail){
-    cout << Head << " " << Head->GetNextPtr() << " " << Tail << endl;
-    Head=Head->GetNextPtr();
-    cout << " Node " << itest << "  is attached to Triangle " << *(Head->GetDatumPtr()) << endl;
-    }
-    */
 
     for(int i=0; i < n_nodes; i++){
           NodeV[i]=D3Dvec();
@@ -421,7 +398,6 @@ void EventLoop()
        if( H < minheight )minheight=H;
     }
     xlength=xlength*scalefac;
-    cout << xside<<endl;
     xside=xside*scalefac;
     cout << xside<<  "  "  << scalefac << endl;
     cout << "maximim height is " << maxheight << endl;
@@ -667,12 +643,10 @@ void RenderScene(CCam & Camera1)
                  t_Pressed=false;
               }
 	      bool drawscene=true;
-              cout << "Drawing scene true\n";
 	      DrawScene(drawscene);
               if(!MouseOn){
 	      if(picking){
                 drawscene=false;
-                cout << "Drawing scene false\n";
 	        DrawScene(drawscene);
 	      }}
       }// endif for !helpscreen
@@ -766,12 +740,10 @@ void RenderScene(CCam & Camera1)
                picking=false;
                glDisable(GL_DEPTH_TEST);
                glDisable(GL_LIGHTING);
-               cout << "Draw Tri 1 " << ipicked << endl;
                DrawTriHits(drawbox); 
                glEnable(GL_DEPTH_TEST);
                glEnable(GL_LIGHTING);
                drawbox=false;
-               cout << "Draw Tri 2 " << ipicked << endl;
                DrawTriHits(drawbox); 
                picking=true;
              }
@@ -781,12 +753,10 @@ void RenderScene(CCam & Camera1)
                picking=false;
                glDisable(GL_DEPTH_TEST);
                glDisable(GL_LIGHTING);
-               cout << "Here at DrawNodeHits, drawbox= " << drawbox << endl;
                DrawNodeHits(drawbox); 
                glEnable(GL_DEPTH_TEST);
                glEnable(GL_LIGHTING);
                drawbox=false;
-               cout << "Here at DrawNodeHits, drawbox= " << drawbox << endl;
                DrawNodeHits(drawbox); 
                picking=true;
              } //endif else for PickTri
@@ -876,14 +846,7 @@ void DrawScene(bool drawscene)
 
       glInitNames();  //Ignored unless in GL_SELECT 
       if(picking){
-          if(PickTri){
            glSelectBuffer(ntri,TriBuffer);
-           }
-      else{
-          cout << "Selecting Node Buffer\n";
-          glSelectBuffer(n_nodes,TriBuffer);
-          cout << "Selected Node Buffer\n";
-          }
        }
 
     if(!drawscene){
@@ -899,14 +862,12 @@ void DrawScene(bool drawscene)
       //so OrthoMode was used. here we pick 3D objects.
       gluPerspective(45.0f,(GLfloat)WIDTH/GLfloat(HEIGHT), 100.0f, 150000.0f);
       glMatrixMode(GL_MODELVIEW);
-          cout << "Pick Matrix Done\n";
     }
 
 
       int i, i1, i2, i3;
       float ex, why, zed;
       double xvals[3],yvals[3],zvals[3];
-      cout << "start l k loop\n";
       for(int k=0; k< iside; k++){         // k=square cell column number
       for(int l=0; l< iside; l++){             // l=square cell row number
 	      for(int m=0; m<2; m++){            // two triangles per square cell
@@ -1048,12 +1009,10 @@ void DrawScene(bool drawscene)
                  zv=NodeV[idraw1].GetZ();
 		 xv=xv+xshift[l][k];
 		 yv=yv+yshift[l][k];
-             //    cout << "Push " << idraw1 << endl;
 		 glPushName(idraw1);
 		 glBegin(GL_POINTS);
                      glVertex3f( xv, zv, -yv );
                  glEnd();
-              //   cout << l << "  " << k << endl;
            
 		 glPopName();
               //   cout << "icell=" << icell << " row=" << l << " col=" << k << endl;
@@ -1108,26 +1067,15 @@ void DrawScene(bool drawscene)
 
           } //end l loop
      } //end k loop 	    
-       cout << "end l k loop \n ";
       
       if(!drawscene){
-         cout << "PerspectiveMode\n";
          PerspectiveMode(); //needed after glPickMatrix
-         cout << "Pop\n";
          glPopMatrix();
-         cout << "Flush\n";
          glFlush();
-         cout << "Render\n";
          int hits=glRenderMode(GL_RENDER);
-	 cout << " number of hits =" << hits << endl;
 	 if(picking && PickTri)ipicked=ProcessTriangleHits(hits, TriBuffer );
 	 if(picking && !PickTri){
-                 cout << "Going to Process Nodes\n";
-                 ipicked=ProcessNodeHits(hits, TriBuffer );
-                 if(ipicked>=0){
-                    cout << "Here\n";}}
-         
-       //  cout << "Object Number Picked " << ipicked << endl;
+                 ipicked=ProcessNodeHits(hits, TriBuffer );}
        }
 }
 int ProcessTriangleHits(int hits, UINT Buffer[]){
@@ -1197,8 +1145,6 @@ int ProcessNodeHits(int hits, UINT Buffer[]){
 	 UINT i,j;
 	 UINT names;
 
-         cout << "Start Processing Nodes\n";
-
          int ireturn=-19999;
          double zmin=1000000;
 
@@ -1253,9 +1199,6 @@ int ProcessNodeHits(int hits, UINT Buffer[]){
                 }
 
 	}  // end loop for hits
-         cout << "End Processing Nodes\n";
         SDL_GetMouseState(&mousex, &mousey);
-         cout << "Leaving\n";
-         cout << "ipicked=" << ipicked << endl;
         return ireturn;
 }
