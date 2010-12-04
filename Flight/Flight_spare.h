@@ -41,7 +41,9 @@ bool foggy=true;
 bool Gouraud=true;
 bool drawlines=false;
 bool picking=false;  //enable us to pick things in the scene
-bool PickTri=false;  //if false, we pick nodes and not triangles
+bool PickTri=true;  //if false, we pick nodes and not triangles
+int ipicked;
+int hits;           //number of hits if picking
 /********************MODES***********************************/
 bool twodee=false;  // camera moves in xz only
 
@@ -52,7 +54,7 @@ bool tethered=false;   //  if true viewer is attached to fixed point by a boom
 bool staked=false;    //   if true viewer is not free to move, but can look about
 
 bool wander=false;    //one of these must be set true if free is true
-bool flight=true;
+bool flight=flight;
 
 bool aeroplane=true;   // if true we have aeroplane roll - pitch control
 
@@ -90,11 +92,13 @@ D3Dvec* Normals;
 D3Dvec* NodeNormals;
 #include "../../XFiles/List.h"
 #include "../../XFiles/Node1.h"
-typedef CMyNode1<int>  ListNode;
+typedef CMyNode1 <int>  ListNode;
 typedef CMyLinkedList<ListNode> intList;
 int const MD=4;  //MAXIMUM DEPTH OF TREE (depth ranges from 0 to MD
     intList** CollideTri; 
     int nlists;
+    intList**  NodeTris;
+
 #include "../../XFiles/TriOctNode.h"
 #include "../../XFiles/TriOctTree.h"
 typedef CMyOctNode <D3Dvec> ONode; //An ONode shall hold a vector
@@ -126,7 +130,7 @@ extern const double convert;
 int arg_count;
 char **arg_list;
 const int nplotsmax=1;
-int ntri, istart, n_nodes, istop;
+int ntri, istart, n_nodes, istop, ishow;
 
 double speed=50.0, angspeed=0.05, speed_diff=.5;
 
@@ -136,10 +140,14 @@ double speed=50.0, angspeed=0.05, speed_diff=.5;
 void EventLoop();
 void RenderScene(CCam  & Camera1);
 void PickObjects();
+UINT* TriBuffer;
 void ProcessHitsLP(int, UINT *);
 void ProcessHitsLC(int, UINT *);
 void ProcessHitsMC(int, UINT *);
-void ProcessTriangleHits(int, UINT *);
+int  ProcessTriangleHits(int, UINT *); //processing in Flight.cpp
+int  ProcessNodeHits(int, UINT *);
+void ProcessTBoxHits(int, UINT *); //processing in DrawXBox
+void ProcessNBoxHits(int, UINT *);
 void SetUp();
 void ToggleWindow(void);
 void MakeWindow(const char *Name, 
@@ -161,6 +169,8 @@ void PerspectiveMode();
 void DrawLightPos(bool);
 void DrawLightCol(bool);
 void DrawMatCol(bool);
+void DrawTriHits(bool);
+void DrawNodeHits(bool);
 
 extern UINT base; //bitmap font functions
 void buildFont(void); 

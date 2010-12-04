@@ -689,6 +689,8 @@ void RenderScene(CCam & Camera1)
        }  //endif for helpscreen
 
       if(lightpos){
+              bool temp_pick;
+              temp_pick=picking;
 	      picking=false; //disable 3D picking
               glDisable(GL_DEPTH_TEST);
               glDisable(GL_LIGHTING);
@@ -700,9 +702,11 @@ void RenderScene(CCam & Camera1)
 
 	      drawbox=false;
 	      DrawLightPos(drawbox);  //use pickmatrix instead
-	      picking=true;
+	      picking=temp_pick;
 	       }
       if(lightcol){
+              bool temp_pick;
+              temp_pick=picking;
 	      picking=false; //disable 3D picking
               glDisable(GL_DEPTH_TEST);
               glDisable(GL_LIGHTING);
@@ -714,9 +718,11 @@ void RenderScene(CCam & Camera1)
 
 	      drawbox=false;   //pickmatrix
 	      DrawLightCol(drawbox);
-	      picking=true;
+	      picking=temp_pick;
 	       }
       if(matcol){
+              bool temp_pick;
+              temp_pick=picking;
 	      picking=false; //disable 3D picking
               glDisable(GL_DEPTH_TEST);
               glDisable(GL_LIGHTING);
@@ -728,7 +734,7 @@ void RenderScene(CCam & Camera1)
 
 	      drawbox=false;   //pickmatrix
 	      DrawMatCol(drawbox);
-	      picking=true;
+	      picking=temp_pick;
 	       }
        if(!MouseOn){
          //if MouseOn is true, using mouse controls and see no cursor
