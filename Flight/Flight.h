@@ -16,6 +16,8 @@
 #include "../../XFiles/Triangle.h"
 #include "../../XFiles/throwcatch.h"
 
+const char* WindowTitle="Flight Game";
+
 
 typedef unsigned char byte;
 typedef unsigned short int USHORT;
