@@ -427,9 +427,9 @@ void EventLoop()
     RealCamPos=Camera1.CamPos;
 
     ixold=ix; izold=iz;
-
+    if(periodic_xz){
     SetShiftX(ix);
-    SetShiftY(iz);
+    SetShiftY(iz);}
 
     //Normals for lighting
     double xvals[3],yvals[3],zvals[3];
