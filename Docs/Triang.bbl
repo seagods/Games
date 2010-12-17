@@ -1,0 +1,16 @@
+\begin{thebibliography}{1}
+
+\bibitem{GIS:Mybib}
+K. Chang, {\em Introduction to Geographical Information Systems (4th Edition)}
+  (McGraw Hill, New York, 2007).
+
+\bibitem{Delaunay:Mybib}
+F. Peparata and M. Shamos, {\em Computational Geometry: An Introduction}
+  (Springer Verlag, New York, 1985).
+
+\bibitem{Fractals:Mybib}
+M.~F. Barnsley, R.~L. Devaney, B.~B. Mandelbrot, H.~O. Peitgen, D. Saupe, and
+  R.~F. Voss, {\em The Science of Fractal Images} (Springer - Verlag, New York,
+  Berlin, Heidelberg, London, Paris, Tokyo, 1988).
+
+\end{thebibliography}

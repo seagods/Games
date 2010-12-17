@@ -38,12 +38,13 @@ bool startoffy=true;
 bool launch=true;
 /*************************************************************/
 bool periodic_xz=true;
-bool collisiontest=true;
-bool foggy=true;
-bool Gouraud=true;
-bool drawlines=false;
-bool picking=false;  //enable us to pick things in the scene
-bool PickTri=false;  //if false, we pick nodes and not triangles
+
+bool collisiontest=false;
+bool foggy=false;
+bool Gouraud=false;
+bool drawlines=true;
+bool picking=true;  //enable us to pick things in the scene
+bool PickTri=true;  //if false, we pick nodes and not triangles
 int ipicked;
 int hits;           //number of hits if picking
 /********************MODES***********************************/
@@ -55,15 +56,15 @@ bool freedom=true;      // if true viewer is free to move anywhere
 bool tethered=false;   //  if true viewer is attached to fixed point by a boom
 bool staked=false;    //   if true viewer is not free to move, but can look about
 
-bool wander=false;    //one of these must be set true if free is true
-bool flight=true;
+bool wander=true;    //one of these must be set true if free is true
+bool flight=false;
 
-bool aeroplane=true;   // if true we have aeroplane roll - pitch control
+bool aeroplane=false;   // if true we have aeroplane roll - pitch control
 
                         
 bool boom=false;      //  needed for tethered only 
                       //  if boom true  make exwhyzed false
-bool exwhyzed=false;   //  if tethered make boom false if exwhyzed is true
+bool exwhyzed=true;   //  if tethered make boom false if exwhyzed is true
                       //  if wander must always be true
 		      //  if flight can be true or false
 		      //  make false if aeroplane true

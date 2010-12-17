@@ -215,68 +215,179 @@ void EventLoop()
      if(j%2==0)EVEN=true;
      if(j%2==1)EVEN=false;
       for(int i=0; i < iside; i++){
+                     //Confused?  It's not surprising, it's index[column][row]!
+                     //Yes I did it in a peculiar way, can't remember why, if ever there was a reason.
+
 		      if(EVEN){
 			      if(i > 0 && i < iside-1){
 			      if(j > 0 && j < iside-1){
-                          //    cout << "Tri=" << index1[i][j] << endl;
-                          //    cout << "Tri=" << index2[i][j] << endl;
 		      Triangles[index1[i][j]].SetNeighb(
-			      index2[i][j-1] ,
+			      index2[i][j] ,
 			      index1[i-1][j] ,
-			      index2[i][j]  );
+			      index2[i][j-1]  );
 		      Triangles[index2[i][j]].SetNeighb(
-			      index1[i][j+1] ,
+			      index1[i][j] ,
 			      index2[i+1][j] ,
-			      index1[i][j]  ); 
-	                 }}
-                      if(periodic_xz){
-		      if(i==0){
-			 Triangles[index1[i][j]].SetN2(index1[i+iside-1][j]);
+			      index1[i][j+1]  ); 
+	                 }} 
+
+		      if(j==0){ //row 0
+                       if(i==0 || i==iside-1){
+		         Triangles[index1[i][j]].SetN1(index2[i][j]);
+		         Triangles[index2[i][j]].SetN1(index1[i][j]);
+                         if(i==0){
+                            Triangles[index2[i][j]].SetN2(index2[i+1][j]);  //bottom left=even
+                            Triangles[index2[i][j]].SetN3(index1[i][j+1]);}
+                        }
+                       if(i>0 && i<iside-1){
+		         Triangles[index1[i][j]].SetN1(index2[i][j]);
+		         Triangles[index2[i][j]].SetN1(index1[i][j]);
+			 Triangles[index1[i][j]].SetN2(index1[i-1][j]);
+			 Triangles[index2[i][j]].SetN2(index2[i+1][j]);
+			 Triangles[index2[i][j]].SetN3(index1[i][j+1]);
+                      }
+                         if(periodic_xz){
+			 Triangles[index1[i][j]].SetN3(index2[i][j+iside-1]);}
 		      }
-		      if(i==iside-1){
-			 Triangles[index2[i][j]].SetN2(index2[i+1-iside][j]);
+
+		      if(j==iside-1){  //row iside
+                       if(i==0 || i==iside-1){
+		         Triangles[index1[i][j]].SetN1(index2[i][j]);
+		         Triangles[index2[i][j]].SetN1(index1[i][j]);
+                         if(i==iside-1){
+                            Triangles[index1[i][j]].SetN2(index1[i-1][j]);  //top right=even
+                            Triangles[index1[i][j]].SetN3(index2[i][j-1]);}
+                       }
+                      if(i>0 && i<iside-1){
+		         Triangles[index1[i][j]].SetN1(index2[i][j]);
+		         Triangles[index2[i][j]].SetN1(index1[i][j]);
+			 Triangles[index1[i][j]].SetN2(index1[i-1][j]);
+			 Triangles[index1[i][j]].SetN3(index2[i][j-1]);
+			 Triangles[index2[i][j]].SetN2(index2[i+1][j]);
+                      }
+                         if(periodic_xz){
+			 Triangles[index2[i][j]].SetN3(index1[i][j+1-iside]);}
 		      }
-		      if(j==0){
-			 Triangles[index1[i][j]].SetN1(index2[i][j+iside-1]);
+		      if(i==0){  // col 0
+                       if(j==0 || j==iside-1){
+		         Triangles[index1[i][j]].SetN1(index2[i][j]);
+		         Triangles[index2[i][j]].SetN1(index1[i][j]);
+                       }
+                      if(j>0 && j<iside-1){
+		         Triangles[index1[i][j]].SetN1(index2[i][j]);
+	                 Triangles[index2[i][j]].SetN1(index1[i][j]);
+			 Triangles[index1[i][j]].SetN3(index2[i][j-1]);
+			 Triangles[index2[i][j]].SetN2(index2[i+1][j]);
+			 Triangles[index2[i][j]].SetN3(index1[i][j+1]);
+                      }
+                         if(periodic_xz){
+			 Triangles[index1[i][j]].SetN2(index1[i+iside-1][j]);}
 		      }
-		      if(j==iside-1){
-			 Triangles[index2[i][j]].SetN1(index1[i][j+1-iside]);
-		      }}
+		      if(i==iside-1){  //col iside
+                       if(j==0 || j==iside-1){
+		         Triangles[index1[i][j]].SetN1(index2[i][j]);
+		         Triangles[index2[i][j]].SetN1(index1[i][j]);
+                       }
+                      if(j>0 && j<iside-1){
+		         Triangles[index1[i][j]].SetN1(index2[i][j]);
+		         Triangles[index2[i][j]].SetN1(index1[i][j]);
+			 Triangles[index1[i][j]].SetN2(index1[i-1][j]);
+			 Triangles[index1[i][j]].SetN3(index2[i][j-1]);
+			 Triangles[index2[i][j]].SetN3(index1[i][j+1]);
+                      }
+                         if(periodic_xz){
+			 Triangles[index2[i][j]].SetN2(index2[i+1-iside][j]);}
+		      }
 		      EVEN=false;
 		      }
 		      else
 		      {
 			      if(i > 0 && i < iside-1){
 			      if(j > 0 && j < iside-1){
-                        //      cout << "Tri=" << index1[i][j] << endl;
-                        //      cout << "Tri=" << index2[i][j] << endl;
 		      Triangles[index1[i][j]].SetNeighb(
-			      index1[i+1][j] ,
+			      index2[i][j] ,
 			      index2[i][j-1] ,
-			      index2[i][j]  );
+			      index1[i+1][j]  );
 		      Triangles[index2[i][j]].SetNeighb(
-			      index2[i-1][j] ,
+			      index1[i][j] ,
 			      index1[i][j+1] ,
-			      index1[i][j]  ); 
-	                  }}
-                      if(periodic_xz){
-		      if(i==0){ 
-			 Triangles[index2[i][j]].SetN1(index2[i+iside-1][j]);
+			      index2[i-1][j]  ); 
+	                  }} //endif i j inequalities
+
+		      if(j==0){   //row 0
+                       if(i==0 || i==iside-1){
+		         Triangles[index1[i][j]].SetN1(index2[i][j]);
+		         Triangles[index2[i][j]].SetN1(index1[i][j]);
+                         if(i==iside-1){
+                            Triangles[index2[i][j]].SetN2(index1[i][j+1]);  //bottom right=odd 
+                            Triangles[index2[i][j]].SetN3(index2[i-1][j]);}
+                       }
+                      if(i>0 && i< iside-1){
+		         Triangles[index1[i][j]].SetN1(index2[i][j]);
+		         Triangles[index2[i][j]].SetN1(index1[i][j]);
+			 Triangles[index1[i][j]].SetN3(index1[i+1][j]);
+			 Triangles[index2[i][j]].SetN2(index1[i][j+1]);
+			 Triangles[index2[i][j]].SetN3(index2[i-1][j]);
+                      }
+                         if(periodic_xz){
+			 Triangles[index1[i][j]].SetN2(index2[i][j+iside-1]);}
 		      }
-		      if(i==iside-1){
-			 Triangles[index1[i][j]].SetN1(index1[i+1-iside][j]);
+		      if(j==iside-1){   //row=iside
+                       if(i==0 || i==iside-1){
+		         Triangles[index1[i][j]].SetN1(index2[i][j]);
+		         Triangles[index2[i][j]].SetN1(index1[i][j]);
+                         if(i==0){
+                            Triangles[index1[i][j]].SetN2(index2[i][j-1]);  //top left=odd
+                            Triangles[index1[i][j]].SetN3(index1[i+1][j]);}
+                       }
+                      if(i>0 && i< iside-1){
+		         Triangles[index1[i][j]].SetN1(index2[i][j]);
+		         Triangles[index2[i][j]].SetN1(index1[i][j]);
+			 Triangles[index1[i][j]].SetN3(index1[i+1][j]);
+			 Triangles[index1[i][j]].SetN2(index2[i][j-1]);
+			 Triangles[index2[i][j]].SetN3(index2[i-1][j]);
+                      }
+                         if(periodic_xz){
+			 Triangles[index2[i][j]].SetN2(index1[i][j+1-iside]);}
 		      }
-		      if(j==0){
-			 Triangles[index1[i][j]].SetN2(index2[i][j+iside-1]);
+		      if(i==0){  //col 0
+                       if(j==0 || j==iside-1){
+		         Triangles[index1[i][j]].SetN1(index2[i][j]);
+		         Triangles[index2[i][j]].SetN1(index1[i][j]);
+                       }
+                      if(j>0 && j< iside-1){
+		         Triangles[index1[i][j]].SetN1(index2[i][j]);
+		         Triangles[index2[i][j]].SetN1(index1[i][j]);
+			 Triangles[index1[i][j]].SetN3(index1[i+1][j]);
+			 Triangles[index1[i][j]].SetN2(index2[i][j-1]);
+			 Triangles[index2[i][j]].SetN2(index1[i][j+1]);
+                      }
+                         if(periodic_xz){
+			 Triangles[index2[i][j]].SetN3(index2[i+iside-1][j]);}
 		      }
-		      if(j==iside-1){
-			 Triangles[index2[i][j]].SetN2(index1[i][j+1-iside]);
-		      }}
+		      if(i==iside-1){   //col iside
+                       if(j==0 || j==iside-1){
+		         Triangles[index1[i][j]].SetN1(index2[i][j]);
+		         Triangles[index2[i][j]].SetN1(index1[i][j]);
+                       }
+                      if(j>0 && j< iside-1){
+		         Triangles[index1[i][j]].SetN1(index2[i][j]);
+		         Triangles[index2[i][j]].SetN1(index1[i][j]);
+			 Triangles[index1[i][j]].SetN2(index2[i][j-1]);
+			 Triangles[index2[i][j]].SetN3(index2[i-1][j]);
+			 Triangles[index2[i][j]].SetN2(index1[i][j+1]);
+                      }
+                         if(periodic_xz){
+			 Triangles[index1[i][j]].SetN3(index1[i+1-iside][j]);}
+		      }
 	              EVEN=true;
 		      }
+                   if(Triangles[127].GetN()){
+                        cout << i << "  " << j << "  " << Triangles[127].GetN3() << endl;}
 
       }  //end for loop in i
     }  //end for loop in j
+   // exit(0);
 
     //NodeTris[i] is a linked list of triangles attached to Node[i]
     NodeTris=(intList**)calloc(n_nodes,sizeof(intList*));
@@ -910,7 +1021,7 @@ void DrawScene(bool drawscene)
  
       if(drawscene){
       int matl=2;
-      if(i < 10)matl=6;
+      if(i  > 8150)matl=6;
       if(LIGHTS){
       float mat_amb[4]={RedM[matl][0], GreenM[matl][0],BlueM[matl][0],
 		                AlphaM[matl][0] };

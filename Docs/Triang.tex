@@ -83,7 +83,8 @@ the landscape.)
 In the program {\it fractalsurf} the two sub-triangles of the grid squares are defined as in Fig.3.
 That is, we do not have sub-grid information, and ignore any niceties which may be used to infer cases
 where things cannot be decided from the data at the corners of a given square. We have called the two ways
-to split a square ``even" and ``odd" and used a chequerboard pattern to ``break things up". (All odd or all even
+to split a square ``even" and ``odd" and used a chequerboard pattern to ``break things up". (Making the squares 
+ all odd or all even
 would tend to introduce more artifacts than otherwise, another choice would be to choose odd and even at random.)
 
 So, we wish to generate a landscape. To generate a ``skyline" or 1D landscape  we can use random midpoint
@@ -113,7 +114,7 @@ included in case irregular meshes are used at a later stage in code development.
 
 \begin{figure}[htb]
 \vspace*{10cm}
-\special{psfile=Subgrid.eps vscale=50 hscale=50 voffset=10 hoffset=80}
+\special{psfile=EvenOdd.eps vscale=50 hscale=50 voffset=10 hoffset=80}
 \caption{ We assign which squares are odd or even in a regular chequerboard pattern without considering
  how to decide in cases such as Fig.2.
 }
