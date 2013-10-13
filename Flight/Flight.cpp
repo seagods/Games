@@ -4,14 +4,15 @@
 #include <iostream>
 #include <string>
 #include <sstream>		//read and write to string
-#include "../../XFiles/SetUp.h"  //loads of declarations and initialisations
-#include "../../XFiles/Controls.h"
-#include "../../XFiles/TrueType.h"  //Following includes need Truetype
-#include "../../XFiles/DrawLightPos.h"
-#include "../../XFiles/DrawLightCol.h"
-#include "../../XFiles/DrawMatCol.h"
-#include "../../XFiles/DrawTriHits.h"
-#include "../../XFiles/DrawNodeHits.h"
+#include "/usr/local/include/XFiles/SetUp.h"  //loads of declarations and initialisations
+#include "/usr/local/include/XFiles/Controls.h"
+#include "/usr/local/include/XFiles/TrueType.h"  //Following includes need Truetype
+#include <GL/glx.h>
+#include "/usr/local/include/XFiles/DrawLightPos.h"
+#include "/usr/local/include/XFiles/DrawLightCol.h"
+#include "/usr/local/include/XFiles/DrawMatCol.h"
+#include "/usr/local/include/XFiles/DrawTriHits.h"
+#include "/usr/local/include/XFiles/DrawNodeHits.h"
 
 void EventLoop()
 {
@@ -137,7 +138,7 @@ void EventLoop()
 	    Camera1.SetView(1000.0,0.0,0.0);
     }
 
-    string filename ="surface.dat";
+    string filename ="/usr/local/include/Flight/surface.dat";
     //ASSUMES SQUARE
     ifstream file_in;
     file_in.open(filename.c_str());
@@ -885,7 +886,7 @@ void RenderScene(CCam & Camera1)
 
 }
 
-#include "../../XFiles/Init.cpp"
+#include "/usr/local/include/XFiles/Init.cpp"
 
 void SetShiftX(int ix){
 
